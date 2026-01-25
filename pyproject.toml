@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spektra"
+version = "0.1.0"
+description = "Cyberpunk-style Matplotlib/Seaborn and Plotly themes"
+readme = "README.md"
+requires-python = ">=3.7"
+license = {text = "MIT"}
+keywords = ["matplotlib", "seaborn", "theme", "style", "visualization", "spektra", "cyberpunk"]
+authors = [
+    {name = "David Landup", email = "david.landup.0@gmail.com"}
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Visualization",
+]
+
+dependencies = [
+    "matplotlib>=3.0.0",
+    "seaborn>=0.11.0",
+    "numpy>=1.19.0",
+]
+
+[project.optional-dependencies]
+plotly = ["plotly>=5.0.0"]
+
+[project.urls]
+Homepage = "https://github.com/DavidLandup0/spektra"
+Repository = "https://github.com/DavidLandup0/spektra"
+Documentation = "https://github.com/DavidLandup0/spektra"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["spektra*"]
+
+[tool.setuptools.package-data]
+spektra = ["themes/*.json"]

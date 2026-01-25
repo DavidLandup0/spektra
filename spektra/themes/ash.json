@@ -1,0 +1,55 @@
+{
+  "name": "ash",
+  "colors": {
+    "bg": "#0D0D0D",
+    "accent": "#E0E0E0",
+    "secondary": "#4A4A4A",
+    "text": "#E0E0E0",
+    "grid": "#222222"
+  },
+  "palette": [
+    "#F0F0F0",
+    "#C8C8C8",
+    "#A0A0A0",
+    "#787878",
+    "#505050",
+    "#2A2A2A"
+  ],
+  "settings": {
+    "alpha": 0.05,
+    "op": 0.05,
+    "font": "sans-serif"
+  },
+  "matplotlib": {
+    "figure.facecolor": "#0D0D0D",
+    "axes.facecolor": "#0D0D0D",
+    "axes.edgecolor": "#444444",
+    "axes.labelcolor": "#E0E0E0",
+    "axes.titlesize": 10,
+    "axes.titleweight": "bold",
+    "grid.color": "#222222",
+    "grid.alpha": 0.3,
+    "grid.linestyle": ":",
+    "xtick.color": "#E0E0E0",
+    "ytick.color": "#E0E0E0",
+    "text.color": "#E0E0E0",
+    "font.family": "sans-serif",
+    "axes.spines.top": false,
+    "axes.spines.right": false,
+    "lines.color": "#E0E0E0",
+    "lines.marker": "s",
+    "lines.markersize": 4,
+    "patch.facecolor": "#E0E0E0",
+    "patch.edgecolor": "#0D0D0D",
+    "scatter.marker": "s",
+    "scatter.edgecolors": "#E0E0E0"
+  },
+  "plotly": {
+    "paper_bgcolor": "#0D0D0D",
+    "plot_bgcolor": "#0D0D0D",
+    "font_color": "#E0E0E0",
+    "font_family": "Roboto Mono, Cascadia Code, Source Code Pro, Courier New, monospace",
+    "grid_color": "#222222",
+    "axis_line_color": "#444444"
+  }
+}

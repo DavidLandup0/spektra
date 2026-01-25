@@ -1,0 +1,54 @@
+{
+    "name": "sakura",
+    "colors": {
+      "bg": "#0D0A0F",
+      "accent": "#FF69B4",
+      "secondary": "#FFFFFF",
+      "text": "#FCE4EC",
+      "grid": "#251A2B"
+    },
+    "aliases": {
+      "acc": "#FF69B4",
+      "sec": "#FFFFFF",
+      "txt": "#FCE4EC"
+    },
+    "palette": [
+      "#FF69B4",
+      "#FFB7C5",
+      "#F48FB1",
+      "#CE93D8",
+      "#FFFFFF",
+      "#880E4F"
+    ],
+    "settings": {
+      "alpha": 0.2,
+      "op": 0.2,
+      "font": "monospace"
+    },
+    "matplotlib": {
+      "figure.facecolor": "#0D0A0F",
+      "axes.facecolor": "#0D0A0F",
+      "axes.edgecolor": "#880E4F",
+      "axes.labelcolor": "#FCE4EC",
+      "axes.titlesize": 10,
+      "axes.titleweight": "bold",
+      "grid.color": "#251A2B",
+      "xtick.color": "#FCE4EC",
+      "ytick.color": "#FCE4EC",
+      "text.color": "#FCE4EC",
+      "font.family": "monospace",
+      "axes.spines.top": false,
+      "axes.spines.right": false,
+      "lines.marker": "s",
+      "lines.markersize": 4,
+      "scatter.marker": "s"
+    },
+    "plotly": {
+      "paper_bgcolor": "#0D0A0F",
+      "plot_bgcolor": "#0D0A0F",
+      "font_color": "#FCE4EC",
+      "font_family": "Share Tech Mono, Roboto Mono, monospace",
+      "grid_color": "#251A2B",
+      "axis_line_color": "#880E4F"
+    }
+  }
