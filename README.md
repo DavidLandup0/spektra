@@ -14,6 +14,8 @@
 
 ```bash
 pip install spektra
+# OR
+uv add spektra
 ```
 
 ## Usage
@@ -45,16 +47,18 @@ print(sk.get_cmap())
 print(sk.get_palette(n=5))
 # ['#FF003C', '#FF00FF', '#00F3FF', '#FFEA00', '#00FF41']
 
-# Theme config is in this dict.
+# Config as dict
 print(sk.get_config())
-# {'bg': '#050505',
-# 'accent': '#FF003C',
-# 'secondary': '#9D0025',
-# 'text': '#FF003C',
-# 'grid': '#1A0006',
-# 'alpha': 0.4,
-# 'op': 0.4,
-# ...
+#{'name': 'ember', 'colors': {'bg': '#050505', 'accent': '#FF003C', 'secondary': '#9D0025', 'text': '#FF003C', 'grid': '#1A0006'},
+# 'palette': ['#FF003C', '#FF00FF', '#00F3FF', '#FFEA00', '#00FF41', '#FF9500'], 'settings': {'alpha': 0.4, 'op': 0.4, 'font': 
+# 'monospace'}, 'matplotlib': {'figure.facecolor': '#050505', 'axes.facecolor': '#050505', 'axes.edgecolor': '#444444', 'axes.
+# labelcolor': '#FF003C', 'axes.titlesize': 10, 'axes.titleweight': 'bold', 'grid.color': '#1A0006', 'grid.alpha': 0.3, 'grid.
+# linestyle': ':', 'xtick.color': '#FF003C', 'ytick.color': '#FF003C', 'text.color': '#FF003C', 'font.family': 'monospace', 'axes.
+# spines.top': False, 'axes.spines.right': False, 'lines.color': '#FF003C', 'lines.marker': 's', 'lines.markersize': 4, 'patch.
+# facecolor': '#FF003C', 'patch.edgecolor': '#050505', 'scatter.marker': 's', 'scatter.edgecolors': '#FF003C'}, 'plotly': 
+# {'paper_bgcolor': '#050505', 'plot_bgcolor': '#050505', 'font_color': '#FF003C', 'font_family': 'Roboto Mono, Cascadia Code, 
+# Source Code Pro, Courier New, monospace', 'grid_color': '#1A0006', 'axis_line_color': '#444444'}, 'cmap': <matplotlib.colors.
+# LinearSegmentedColormap object at 0x1083e7d40>}
 ```
 
 ## Theme Files

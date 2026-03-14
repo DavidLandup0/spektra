@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "spektra"
-version = "0.1.1"
+version = "0.1.2"
 description = "Cyberpunk-style Matplotlib/Seaborn and Plotly themes"
 readme = "README.md"
 requires-python = ">=3.7"

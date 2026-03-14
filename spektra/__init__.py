@@ -1,4 +1,4 @@
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 from .themes import (
     style,
@@ -8,4 +8,5 @@ from .themes import (
     get_theme,
     get_config,
     get_cmap,
+    get_palette,
 )

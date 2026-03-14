@@ -16,7 +16,7 @@ class ThemeManager:
         self.theme = None
         self.config = None
 
-    def get_theme_directory(theme_name):
+    def get_theme_directory(self, theme_name):
         theme_path = os.path.join(
             os.path.dirname(__file__), "themes", f"{theme_name}.json"
         )
