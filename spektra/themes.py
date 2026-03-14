@@ -27,7 +27,7 @@ class ThemeManager:
 
     def load_config(self, theme_name):
         """Load config from JSON file."""
-        theme_path = get_theme_directory(theme_name)
+        theme_path = self.get_theme_directory(theme_name)
         with open(theme_path, "r") as f:
             config = json.load(f)
 
