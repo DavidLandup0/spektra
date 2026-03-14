@@ -130,7 +130,11 @@ fig.add_trace(
 fig.add_trace(
     go.Heatmap(
         z=matrix_data,
-        colorscale=[[0, colors["bg"]], [0.5, colors["secondary"]], [1, colors["accent"]]],
+        colorscale=[
+            [0, colors["bg"]],
+            [0.5, colors["secondary"]],
+            [1, colors["accent"]],
+        ],
         showscale=False,
         xgap=2,
         ygap=2,
@@ -159,7 +163,9 @@ fig.update_layout(
     width=1400,
     paper_bgcolor=colors["bg"],
     plot_bgcolor=colors["bg"],
-    font=dict(color=colors["text"], family="Roboto Mono, Cascadia Code, monospace", size=11),
+    font=dict(
+        color=colors["text"], family="Roboto Mono, Cascadia Code, monospace", size=11
+    ),
     title=dict(
         text=f"// TACTICAL_DASHBOARD // MODE: {theme_name.upper()} //",
         font=dict(size=20, color=colors["accent"]),
@@ -168,7 +174,10 @@ fig.update_layout(
     ),
     showlegend=True,
     legend=dict(
-        bgcolor=colors["bg"], bordercolor=colors["secondary"], borderwidth=1, font=dict(size=10)
+        bgcolor=colors["bg"],
+        bordercolor=colors["secondary"],
+        borderwidth=1,
+        font=dict(size=10),
     ),
     margin=dict(t=100, l=80, r=80, b=80),
 )

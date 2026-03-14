@@ -32,7 +32,12 @@ def create_header(theme_name, output_dir="."):
     ax_main.axis("off")
 
     border = mpatches.Rectangle(
-        (0.02, 0.05), 0.96, 0.9, linewidth=3, edgecolor=colors["accent"], facecolor="none"
+        (0.02, 0.05),
+        0.96,
+        0.9,
+        linewidth=3,
+        edgecolor=colors["accent"],
+        facecolor="none",
     )
     ax_main.add_patch(border)
 
@@ -79,7 +84,9 @@ def create_header(theme_name, output_dir="."):
     # [0] single line
     axs[0].plot(time, sig_1, color=colors["accent"], linewidth=1.2)
     axs[0].fill_between(time, sig_1, color=colors["accent"], alpha=settings["alpha"])
-    axs[0].set_title("> SIGNAL", fontsize=7, color=colors["accent"], fontfamily="monospace")
+    axs[0].set_title(
+        "> SIGNAL", fontsize=7, color=colors["accent"], fontfamily="monospace"
+    )
 
     # [1] scatter
     axs[1].scatter(
@@ -90,12 +97,16 @@ def create_header(theme_name, output_dir="."):
         marker="s",
         s=15,
     )
-    axs[1].set_title("> TARGET", fontsize=7, color=colors["accent"], fontfamily="monospace")
+    axs[1].set_title(
+        "> TARGET", fontsize=7, color=colors["accent"], fontfamily="monospace"
+    )
 
     # [2] multi line
     axs[2].plot(time, sig_1, color=colors["accent"], linewidth=1)
     axs[2].plot(time, sig_2, color=colors["secondary"], alpha=0.7, linewidth=1)
-    axs[2].set_title("> STREAM", fontsize=7, color=colors["accent"], fontfamily="monospace")
+    axs[2].set_title(
+        "> STREAM", fontsize=7, color=colors["accent"], fontfamily="monospace"
+    )
 
     # [3] hex
     axs[3].hexbin(
@@ -106,7 +117,9 @@ def create_header(theme_name, output_dir="."):
         edgecolors=colors["bg"],
         linewidths=0.5,
     )
-    axs[3].set_title("> DENSITY", fontsize=7, color=colors["accent"], fontfamily="monospace")
+    axs[3].set_title(
+        "> DENSITY", fontsize=7, color=colors["accent"], fontfamily="monospace"
+    )
 
     # [4] heat
     sns.heatmap(
@@ -117,7 +130,9 @@ def create_header(theme_name, output_dir="."):
         linewidths=0.8,
         linecolor=colors["bg"],
     )
-    axs[4].set_title("> MEMORY", fontsize=7, color=colors["accent"], fontfamily="monospace")
+    axs[4].set_title(
+        "> MEMORY", fontsize=7, color=colors["accent"], fontfamily="monospace"
+    )
     axs[4].set_xticks([])
     axs[4].set_yticks([])
 
@@ -130,7 +145,9 @@ def create_header(theme_name, output_dir="."):
         element="step",
         alpha=settings["alpha"],
     )
-    axs[5].set_title("> DIST", fontsize=7, color=colors["accent"], fontfamily="monospace")
+    axs[5].set_title(
+        "> DIST", fontsize=7, color=colors["accent"], fontfamily="monospace"
+    )
 
     # [6] bar
     axs[6].bar(
@@ -141,7 +158,9 @@ def create_header(theme_name, output_dir="."):
         edgecolor=colors["accent"],
         linewidth=1,
     )
-    axs[6].set_title("> METRICS", fontsize=7, color=colors["accent"], fontfamily="monospace")
+    axs[6].set_title(
+        "> METRICS", fontsize=7, color=colors["accent"], fontfamily="monospace"
+    )
 
     # [7] sine
     axs[7].plot(time, np.sin(time * 3), color=colors["secondary"], linewidth=1.5)

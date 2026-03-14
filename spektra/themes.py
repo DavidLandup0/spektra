@@ -11,6 +11,7 @@ import matplotlib as mpl
 
 class ThemeManager:
     """Convenience class for loading theme configs and getting the current state."""
+
     def __init__(self):
         self.theme = None
         self.config = None
@@ -21,7 +22,7 @@ class ThemeManager:
         )
         if not os.path.exists(theme_path):
             raise ValueError(f"Theme '{theme_name}' not found at {theme_path}")
-        
+
         return theme_path
 
     def load_config(self, theme_name):
@@ -156,7 +157,9 @@ def style_plotly(theme_name="ember"):
         colorway=[cfg["colors"]["accent"], cfg["colors"]["secondary"]],
     )
 
-    plotly_template.data.scatter = [go.Scatter(marker=dict(color=cfg["colors"]["accent"]))]
+    plotly_template.data.scatter = [
+        go.Scatter(marker=dict(color=cfg["colors"]["accent"]))
+    ]
     plotly_template.data.bar = [go.Bar(marker=dict(color=cfg["colors"]["accent"]))]
 
     pio.templates[f"{theme_name}"] = plotly_template
