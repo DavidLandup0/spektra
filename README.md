@@ -18,6 +18,16 @@ pip install spektra
 uv add spektra
 ```
 
+Then import and apply the styles:
+
+```python
+import spektra as sk
+import matplotlib.pyplot as plt
+
+# One of ['ember', 'neon', 'ash', 'raiden', 'sakura']
+sk.style('ember')  # <- This applies styles to matplotlib, seaborn and plotly~
+```
+
 ## Usage
 
 ```python
