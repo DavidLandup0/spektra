@@ -42,6 +42,49 @@ plt.show()
 ```
 
 
+<img src="examples/example_images/quickstart.png" width="300" />
+
+
+A few themes are available:
+
+```python
+print(sk.get_available_themes())
+# ['sakura', 'neon', 'ash', 'raiden', 'ember']
+```
+
+<table border="0">
+   <tr>
+      <td>
+         <img src="examples/example_images/raiden_example.png" width="300" />
+      </td>
+      <td align="center">Raiden</td>
+   </tr>
+   <tr>
+      <td>
+         <img src="examples/example_images/neon_example.png" width="300" />
+      </td>
+      <td align="center">Neon</td>
+   </tr>
+   <tr>
+      <td>
+         <img src="examples/example_images/sakura_example.png" width="300" />
+      </td>
+      <td align="center">Sakura</td>
+   </tr>
+   <tr>
+      <td>
+         <img src="examples/example_images/ember_example.png" width="300" />
+      </td>
+      <td align="center">Ember</td>
+   </tr>
+   <tr>
+      <td><img src="examples/example_images/ash_example.png" width="300" /></td>
+      <td align="center">Ash</td>
+   </tr>
+</table>
+
+
+
 Quickview:
 
 ```python
