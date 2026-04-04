@@ -187,7 +187,7 @@ def create_header(theme_name, output_dir="."):
 
 
 def create_all_headers(output_dir="."):
-    themes = sk.available_themes()
+    themes = sk.get_available_themes()
 
     print(f"Creating headers for {len(themes)} themes...")
     print(f"Output directory: {os.path.abspath(output_dir)}\n")

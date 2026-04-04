@@ -1,0 +1,54 @@
+{
+    "name": "mitsuki",
+    "colors": {
+      "bg": "#2E324D",
+      "accent": "#fea2ba",
+      "secondary": "#7ec3ed",
+      "text": "#f6f9f6",
+      "grid": "#40445c"
+    },
+    "aliases": {
+      "acc": "#fea2ba",
+      "sec": "#7ec3ed",
+      "txt": "#f6f9f6"
+    },
+    "palette": [
+      "#fea2ba",
+      "#7ec3ed",
+      "#1adee6",
+      "#dfbee8",
+      "#8180b4",
+      "#7efaff"
+    ],
+    "settings": {
+      "alpha": 0.25,
+      "op": 0.25,
+      "font": "monospace"
+    },
+    "matplotlib": {
+      "figure.facecolor": "#2E324D",
+      "axes.facecolor": "#2E324D",
+      "axes.edgecolor": "#7ec3ed",
+      "axes.labelcolor": "#f6f9f6",
+      "axes.titlesize": 10,
+      "axes.titleweight": "bold",
+      "grid.color": "#40445c",
+      "xtick.color": "#f6f9f6",
+      "ytick.color": "#f6f9f6",
+      "text.color": "#f6f9f6",
+      "font.family": "monospace",
+      "axes.spines.top": false,
+      "axes.spines.right": false,
+      "lines.marker": "s",
+      "lines.markersize": 4,
+      "scatter.marker": "s"
+    },
+    "plotly": {
+      "paper_bgcolor": "#2E324D",
+      "plot_bgcolor": "#2E324D",
+      "font_color": "#f6f9f6",
+      "font_family": "Share Tech Mono, Roboto Mono, monospace",
+      "grid_color": "#40445c",
+      "axis_line_color": "#7ec3ed"
+    }
+  }
