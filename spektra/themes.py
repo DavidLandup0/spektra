@@ -102,7 +102,7 @@ def style_matplotlib(theme_name="ember"):
     """Apply a theme to matplotlib/seaborn.
 
     Args:
-        theme_name: Name of theme to apply. Options: 'ember', 'neon', 'ash', 'raiden', 'sakura'.
+        theme_name: Name of theme to apply. Options: 'ash', 'ember', 'mitsuki', 'neon', 'nightshade', 'raiden', 'sakura', 'sky'.
 
     Examples:
         >>> import spektra as sk
@@ -127,9 +127,8 @@ def style_matplotlib(theme_name="ember"):
 def style_plotly(theme_name="ember"):
     """Apply a theme to plotly.
 
-    Args:
-        theme_name: Name of theme to apply. Options: 'ember', 'neon', 'ash', 'raiden', 'sakura'.
-
+            Args:
+                theme_name: Name of theme to apply. Options: 'ash', 'ember', 'mitsuki', 'neon', 'nightshade', 'raiden', 'sakura', 'sky'.
     Examples:
         >>> import spektra as sk
         >>> sk.style_plotly('ember')
@@ -173,13 +172,13 @@ def style(theme_name="ember"):
     """Apply a theme to both matplotlib and plotly.
 
     Args:
-        theme_name: Name of theme to apply. Options: 'ember', 'neon', 'ash', 'raiden', 'sakura'.
+        theme_name: Name of theme to apply. Options: 'ash', 'ember', 'mitsuki', 'neon', 'nightshade', 'raiden', 'sakura', 'sky'.
 
     Examples:
         >>> import spektra as sk
         >>> sk.style('ember')
         >>> sk.get_available_themes()
-        ['ash', 'ember', 'neon', 'raiden', 'sakura']
+        ['ash', 'ember', 'mitsuki', 'neon', 'nightshade', 'raiden', 'sakura', 'sky']
     """
     style_matplotlib(theme_name)
     style_plotly(theme_name)

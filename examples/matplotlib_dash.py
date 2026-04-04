@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 
-sk.style("ember")
+sk.style("mitsuki")
 c = sk.get_config()
 colors = c["colors"]
 settings = c["settings"]
@@ -17,7 +17,7 @@ dist_data = np.random.normal(0, 1, 500)
 matrix_data = np.random.rand(12, 12)
 
 fig, axs = plt.subplots(2, 3, figsize=(18, 10))
-theme_mode = sk.get_current_theme()
+theme_mode = sk.get_theme()
 title_base = "BIOMETRIC_STABILITY" if theme_mode == "ash" else "TACTICAL_OVERRIDE"
 fig.suptitle(
     f"// {title_base} // MODE_{theme_mode.upper()}",
