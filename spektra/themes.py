@@ -1,12 +1,14 @@
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 import seaborn as sns
-import json
-import os
 
 import plotly.graph_objects as go
 import plotly.io as pio
 import matplotlib as mpl
+
+from .core import available_themes
+from .core import load_config
+from .core import theme_path
 
 
 class ThemeManager:
@@ -17,21 +19,11 @@ class ThemeManager:
         self.config = None
 
     def get_theme_directory(self, theme_name):
-        theme_path = os.path.join(
-            os.path.dirname(__file__), "themes", f"{theme_name}.json"
-        )
-        if not os.path.exists(theme_path):
-            raise ValueError(f"Theme '{theme_name}' not found at {theme_path}")
-
-        return theme_path
+        return theme_path(theme_name)
 
     def load_config(self, theme_name):
         """Load config from JSON file."""
-        theme_path = self.get_theme_directory(theme_name)
-        with open(theme_path, "r") as f:
-            config = json.load(f)
-
-        return config
+        return load_config(theme_name)
 
     @staticmethod
     def create_colormap(color):
@@ -53,12 +45,7 @@ _theme_manager = ThemeManager()
 
 def get_available_themes():
     """Return list of available theme names."""
-    themes_dir = os.path.join(os.path.dirname(__file__), "themes")
-    if not os.path.exists(themes_dir):
-        return []
-    return [
-        f.replace(".json", "") for f in os.listdir(themes_dir) if f.endswith(".json")
-    ]
+    return available_themes()
 
 
 def get_theme():
