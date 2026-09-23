@@ -19,7 +19,23 @@ jobs:
       - name: Export all Konsole schemes
         run: spektra apply --all -t konsole -o /tmp/konsole-out
       - name: Validate with pytest
-        run: pytest tests/test_terminals.py -k "konsole or apply or terminals_list" -q
+        run: pytest tests/test_terminals.py -k "konsole or apply or targets" -q
+
+  validate-opencode:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: |
+          pip install -e ".[plotly]"
+          pip install pytest
+      - name: Export all OpenCode themes
+        run: spektra apply --all -t opencode -o /tmp/opencode-out
+      - name: Validate with pytest
+        run: pytest tests/test_terminals.py -k "opencode" -q
 
   validate-iterm2:
     runs-on: macos-latest

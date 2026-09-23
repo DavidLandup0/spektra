@@ -13,11 +13,11 @@ That's it. The theme is installed, then follow the one follow-up step printed fo
 
 ```bash
 spektra list themes       # sakura, ember, neon, ash, raiden, mitsuki, nightshade, sky
-spektra list terminals    # konsole, iterm2
+spektra list targets      # konsole, iterm2, opencode
 spektra apply sakura                  # auto-detect your terminal
 spektra apply sakura -t konsole       # pick explicitly
 spektra apply --all -t konsole        # install every theme at once
-spektra apply ember -t iterm2 -o ~/Downloads  # write file elsewhere instead of installing
+spektra apply sakura -t opencode      # write to ~/.config/opencode/themes/
 ```
 
 Run `spektra --help` or `spektra apply --help` anytime — the same guide below ships in the CLI.
@@ -31,6 +31,11 @@ Then: restart Konsole → Settings → Edit Current Profile → Appearance → p
 **iTerm2 (macOS — the macOS path)**
 Writes `Spektra-<Name>.itermcolors` (to `~/.local/share/spektra/` or your `-o DIR`).
 Then: iTerm2 → Settings → Profiles → Colors → Color Presets → Import the file.
+
+**OpenCode**
+Installs to `~/.config/opencode/themes/spektra-<name>.json`.
+Then: set `"theme": "spektra-sakura"` in `tui.json`, or run `/theme` inside opencode.
+Spektra themes are dark-only, so light mode shows the same colors.
 
 ## Tips
 
