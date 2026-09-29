@@ -1,21 +1,24 @@
-"""Validation for `spektra apply` output (Konsole + iTerm2).
+"""Validation for `spektra apply` output (Konsole, iTerm2, OpenCode).
 
 Runs on Linux and macOS alike; the macOS CI job additionally runs
 `plutil -lint` over the generated files (see .github/workflows/).
 """
 
 import configparser
+import json
 import plistlib
 
 import pytest
 
 from spektra.core import available_themes, load_config
 from spektra.terminals import (
+    OPENCODE_ROLES,
     apply,
     apply_all,
-    available_terminals,
+    available_targets,
     to_iterm2,
     to_konsole,
+    to_opencode,
 )
 
 THEMES = available_themes()
@@ -119,8 +122,8 @@ def test_iterm2_round_trips_theme_colors(theme):
         assert normal == raw or normal == lighten(raw, 0.35), f"{theme} {raw_hex}"
 
 
-def test_terminals_list():
-    assert available_terminals() == ["konsole", "iterm2"]
+def test_targets_list():
+    assert available_targets() == ["konsole", "iterm2", "opencode"]
 
 
 def test_apply_writes_files(tmp_path):
@@ -129,3 +132,40 @@ def test_apply_writes_files(tmp_path):
     paths = apply_all(terminal="iterm2", out=str(tmp_path))
     assert len(paths) == len(THEMES)
     assert all(p.endswith(".itermcolors") for p in paths)
+
+
+@pytest.mark.parametrize("theme", THEMES)
+def test_opencode_is_valid_theme_json(theme):
+    data = json.loads(to_opencode(load_config(theme), theme))
+    assert data["$schema"] == "https://opencode.ai/theme.json"
+    assert set(data["theme"]) == set(OPENCODE_ROLES)
+    for role, src in OPENCODE_ROLES.items():
+        assert data["theme"][role] == {"dark": src, "light": src}, f"{theme} {role}"
+        assert src in data["defs"], f"{theme} {role} -> missing def {src}"
+    for name, value in data["defs"].items():
+        assert value.startswith("#") and len(value) == 7, f"{theme} def {name}"
+
+
+@pytest.mark.parametrize("theme", THEMES)
+def test_opencode_round_trips_theme_colors(theme):
+    cfg = load_config(theme)
+    data = json.loads(to_opencode(load_config(theme), theme))
+    defs = data["defs"]
+    assert defs["bg"] == cfg["colors"]["bg"].upper()
+    assert defs["text"] == cfg["colors"]["text"].upper()
+    assert defs["accent"] == cfg["colors"]["accent"]
+    assert defs["secondary"] == cfg["colors"]["secondary"]
+    for i, hex_color in enumerate(cfg["palette"]):
+        assert defs[f"p{i}"] == hex_color.upper(), f"{theme} p{i}"
+
+
+def test_apply_opencode_uses_lowercase_name(tmp_path):
+    dest = apply("sakura", terminal="opencode", out=str(tmp_path / "out.json"))
+    assert dest.endswith("out.json")
+    with open(dest) as f:
+        data = json.load(f)
+    assert set(data["theme"]) == set(OPENCODE_ROLES)
+    paths = apply_all(terminal="opencode", out=str(tmp_path))
+    assert len(paths) == len(THEMES)
+    assert all(p.endswith(".json") for p in paths)
+    assert any(p.endswith("spektra-sakura.json") for p in paths)

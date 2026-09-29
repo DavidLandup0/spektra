@@ -10,6 +10,7 @@ HELP_EPILOG = """examples:
 
   konsole: ~/.local/share/konsole/ (then pick it under Appearance)
   iterm2: ~/.local/share/spektra/ (then Import as Color Preset)
+  opencode: ~/.config/opencode/themes/ (then /theme inside opencode)
 """
 
 
@@ -22,8 +23,8 @@ def build_parser():
     )
     sub = p.add_subparsers(dest="cmd", required=True)
 
-    lp = sub.add_parser("list", help="List themes or terminals.")
-    lp.add_argument("what", choices=["themes", "terminals"], help="What to list.")
+    lp = sub.add_parser("list", help="List themes or targets.")
+    lp.add_argument("what", choices=["themes", "targets"], help="What to list.")
 
     ap = sub.add_parser("apply", help="Apply a theme to your terminal.")
     ap.add_argument(
@@ -35,10 +36,10 @@ def build_parser():
     ap.add_argument("--all", action="store_true", help="Install every theme at once.")
     ap.add_argument(
         "-t",
-        "--terminal",
+        "--target",
         default=None,
-        choices=["konsole", "iterm2"],
-        help="Target terminal (default: auto-detect).",
+        choices=["konsole", "iterm2", "opencode"],
+        help="Target (default: auto-detect).",
     )
     ap.add_argument(
         "-o",
@@ -50,11 +51,11 @@ def build_parser():
 
 
 def main(argv=None):
-    from .terminals import apply, apply_all, available_terminals, available_themes
+    from .terminals import apply, apply_all, available_targets, available_themes
 
     args = build_parser().parse_args(argv)
     if args.cmd == "list":
-        items = available_themes() if args.what == "themes" else available_terminals()
+        items = available_themes() if args.what == "themes" else available_targets()
         print("\n".join(items))
         return 0
     if args.cmd == "apply":
@@ -62,7 +63,7 @@ def main(argv=None):
         if args.all:
             if out and not os.path.isdir(out):
                 os.makedirs(out, exist_ok=True)
-            apply_all(terminal=args.terminal, out=out)
+            apply_all(terminal=args.target, out=out)
             return 0
         if not args.theme:
             raise SystemExit(
@@ -72,9 +73,13 @@ def main(argv=None):
 
         dest = out
         if dest and os.path.isdir(dest):
-            term = args.terminal or detect_terminal()
-            dest = os.path.join(dest, f"Spektra-{args.theme.capitalize()}.{EXT[term]}")
-        apply(args.theme, terminal=args.terminal, out=dest)
+            term = args.target or detect_terminal()
+            if term == "opencode":
+                fname = f"spektra-{args.theme}.json"
+            else:
+                fname = f"Spektra-{args.theme.capitalize()}.{EXT[term]}"
+            dest = os.path.join(dest, fname)
+        apply(args.theme, terminal=args.target, out=dest)
         return 0
     return 0
 

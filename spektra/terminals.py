@@ -1,5 +1,6 @@
 """Export themes to terminal color schemes."""
 
+import json
 import os
 import platform
 import plistlib
@@ -7,16 +8,17 @@ import shutil
 
 from .core import available_themes, load_config
 
-TERMINALS = ("konsole", "iterm2")
+TARGETS = ("konsole", "iterm2", "opencode")
 
 FOLLOW_UPS = {
     "konsole": "Restart Konsole, then Settings > Edit Current Profile > Appearance > pick Spektra {Name}.",
     "iterm2": "iTerm2 > Settings > Profiles > Colors > Color Presets > Import {path}.",
+    "opencode": 'Set "theme": "spektra-{name}" in tui.json, or run /theme inside opencode.',
 }
 
 
-def available_terminals():
-    return list(TERMINALS)
+def available_targets():
+    return list(TARGETS)
 
 
 def hex_to_rgb(h):
@@ -115,7 +117,92 @@ def to_iterm2(cfg, name):
     return plistlib.dumps(d, fmt=plistlib.FMT_XML)
 
 
-EXT = {"konsole": "colorscheme", "iterm2": "itermcolors"}
+EXT = {"konsole": "colorscheme", "iterm2": "itermcolors", "opencode": "json"}
+
+
+def rgb_hex(c):
+    return f"#{c[0]:02X}{c[1]:02X}{c[2]:02X}"
+
+
+OPENCODE_ROLES = {
+    "primary": "accent",
+    "secondary": "secondary",
+    "accent": "accent",
+    "error": "p0",
+    "warning": "p3",
+    "success": "p4",
+    "info": "accent",
+    "text": "text",
+    "textMuted": "muted",
+    "background": "bg",
+    "backgroundPanel": "panel",
+    "backgroundElement": "element",
+    "border": "border",
+    "borderActive": "accent",
+    "borderSubtle": "panel",
+    "diffAdded": "p4",
+    "diffRemoved": "p0",
+    "diffContext": "muted",
+    "diffHunkHeader": "muted",
+    "diffHighlightAdded": "p4",
+    "diffHighlightRemoved": "p0",
+    "diffAddedBg": "panel",
+    "diffRemovedBg": "panel",
+    "diffContextBg": "panel",
+    "diffLineNumber": "muted",
+    "diffAddedLineNumberBg": "panel",
+    "diffRemovedLineNumberBg": "panel",
+    "markdownText": "text",
+    "markdownHeading": "accent",
+    "markdownLink": "secondary",
+    "markdownLinkText": "p1",
+    "markdownCode": "p4",
+    "markdownBlockQuote": "muted",
+    "markdownEmph": "p0",
+    "markdownStrong": "p3",
+    "markdownHorizontalRule": "muted",
+    "markdownListItem": "accent",
+    "markdownListEnumeration": "p1",
+    "markdownImage": "secondary",
+    "markdownImageText": "p1",
+    "markdownCodeBlock": "text",
+    "syntaxComment": "muted",
+    "syntaxKeyword": "secondary",
+    "syntaxFunction": "accent",
+    "syntaxVariable": "p1",
+    "syntaxString": "p4",
+    "syntaxNumber": "p5",
+    "syntaxType": "p2",
+    "syntaxOperator": "secondary",
+    "syntaxPunctuation": "text",
+}
+
+
+def to_opencode(cfg, name):
+    pal = [hex_to_rgb(x) for x in cfg["palette"]]
+    bg = hex_to_rgb(cfg["colors"]["bg"])
+    tx = hex_to_rgb(cfg["colors"]["text"])
+    gr = hex_to_rgb(cfg["colors"]["grid"])
+    defs = {
+        "bg": rgb_hex(bg),
+        "text": rgb_hex(tx),
+        "accent": cfg["colors"]["accent"],
+        "secondary": cfg["colors"]["secondary"],
+        "muted": rgb_hex(darken(tx, 0.35)),
+        "panel": rgb_hex(gr),
+        "element": rgb_hex(lighten(bg, 0.1)),
+        "border": rgb_hex(lighten(bg, 0.15)),
+    }
+    for i, p in enumerate(pal):
+        defs[f"p{i}"] = rgb_hex(p)
+    theme = {role: {"dark": src, "light": src} for role, src in OPENCODE_ROLES.items()}
+    return (
+        json.dumps(
+            {"$schema": "https://opencode.ai/theme.json", "defs": defs, "theme": theme},
+            indent=2,
+        )
+        + "\n"
+    )
 
 
 def detect_terminal():
@@ -123,7 +210,12 @@ def detect_terminal():
         return "iterm2"
     if os.environ.get("KDE_SESSION_VERSION") or shutil.which("konsole"):
         return "konsole"
-    raise ValueError("Could not auto-detect terminal. Use -t konsole|iterm2.")
+    raise ValueError("Could not auto-detect terminal. Use -t konsole|iterm2|opencode.")
+
+
+def config_dir():
+    base = os.environ.get("XDG_CONFIG_HOME", os.path.expanduser("~/.config"))
+    return os.path.join(base, "opencode", "themes")
 
 
 def default_path(theme, terminal):
@@ -131,25 +223,27 @@ def default_path(theme, terminal):
     home = os.path.expanduser("~")
     if terminal == "konsole":
         return os.path.join(home, ".local/share/konsole", f"Spektra-{cap}.colorscheme")
+    if terminal == "opencode":
+        return os.path.join(config_dir(), f"spektra-{theme}.json")
     return os.path.join(home, ".local/share/spektra", f"Spektra-{cap}.itermcolors")
 
 
 def apply(theme, terminal=None, out=None):
     terminal = terminal or detect_terminal()
-    if terminal not in TERMINALS:
-        raise ValueError(f"Unknown terminal {terminal!r}. Choose from {TERMINALS}.")
+    if terminal not in TARGETS:
+        raise ValueError(f"Unknown terminal {terminal!r}. Choose from {TARGETS}.")
     themes = available_themes()
     if theme not in themes:
         raise ValueError(f"Unknown theme {theme!r}. Choose from {themes}.")
     cfg = load_config(theme)
-    fn = {"konsole": to_konsole, "iterm2": to_iterm2}[terminal]
+    fn = {"konsole": to_konsole, "iterm2": to_iterm2, "opencode": to_opencode}[terminal]
     data = fn(cfg, theme)
     dest = os.path.expanduser(out) if out else default_path(theme, terminal)
     os.makedirs(os.path.dirname(dest) or ".", exist_ok=True)
     mode = "wb" if isinstance(data, bytes) else "w"
     with open(dest, mode) as f:
         f.write(data)
-    msg = FOLLOW_UPS[terminal].format(Name=theme.capitalize(), path=dest)
+    msg = FOLLOW_UPS[terminal].format(Name=theme.capitalize(), name=theme, path=dest)
     print(f"Wrote {dest}\n{msg}")
     return dest
 
@@ -160,8 +254,10 @@ def apply_all(terminal=None, out=None):
     for theme in available_themes():
         dest = None
         if out:
-            dest = os.path.join(
-                os.path.expanduser(out), f"Spektra-{theme.capitalize()}.{EXT[terminal]}"
-            )
+            if terminal == "opencode":
+                fname = f"spektra-{theme}.json"
+            else:
+                fname = f"Spektra-{theme.capitalize()}.{EXT[terminal]}"
+            dest = os.path.join(os.path.expanduser(out), fname)
         paths.append(apply(theme, terminal=terminal, out=dest))
     return paths
