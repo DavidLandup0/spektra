@@ -1,0 +1,40 @@
+name: terminal themes
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate-konsole:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: |
+          pip install -e ".[plotly]"
+          pip install pytest
+      - name: Export all Konsole schemes
+        run: spektra apply --all -t konsole -o /tmp/konsole-out
+      - name: Validate with pytest
+        run: pytest tests/test_terminals.py -k "konsole or apply or terminals_list" -q
+
+  validate-iterm2:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: |
+          pip install -e ".[plotly]"
+          pip install pytest
+      - name: Export all iTerm2 schemes
+        run: spektra apply --all -t iterm2 -o /tmp/iterm-out
+      - name: Lint plists with plutil
+        run: plutil -lint /tmp/iterm-out/*.itermcolors
+      - name: Validate with pytest
+        run: pytest tests/test_terminals.py -q
