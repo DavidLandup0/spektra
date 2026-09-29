@@ -41,6 +41,9 @@ Homepage = "https://github.com/DavidLandup0/spektra"
 Repository = "https://github.com/DavidLandup0/spektra"
 Documentation = "https://github.com/DavidLandup0/spektra"
 
+[project.scripts]
+spektra = "spektra.cli:main"
+
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["spektra*"]
